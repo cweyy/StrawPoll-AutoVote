@@ -148,9 +148,7 @@ def strawpoll_vote():
                                 },
                                 headers=headers,
                                 json=post_body)
-
-        except Exception as e:
-            print(e)
+        except:
             continue
 
         latency = int(round(time.time() * 1000)) - starttime
