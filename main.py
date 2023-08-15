@@ -1,5 +1,6 @@
 import threading
 import queue
+import sys
 
 import requests
 import time
@@ -62,6 +63,13 @@ watermark = colored("""
 
 
 print(watermark)
+
+
+required_version = (3, 11)
+
+if sys.version_info < required_version:
+    print(colored("Python 3.11 or higher required!", "red"))
+    exit()
 
 
 def get_session(proxy):
