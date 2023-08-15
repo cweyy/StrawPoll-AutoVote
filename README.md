@@ -36,10 +36,10 @@ python3 main.py --poll <poll_id> --vote <answer_id> --proxies http_proxies.txt -
 
 Replace the placeholders with appropriate values:
 
--   `<poll_id>`: The ID of the StrawPoll you want to vote on.
--   `<answer_id>`: The ID of the answer option you want to vote for.
--   `http_proxies.txt`: The path to the proxy list text file.
--   `<num_threads>`: The maximum number of threads to run in parallel. If not specified, the application will use the maximum available threads.
+-   `--poll`: The ID of the StrawPoll you want to vote on.
+-   `--vote`: The ID of the answer option you want to vote for.
+-   `--proxies`: The path to the proxy list text file.
+-   `--threads`: The maximum number of threads to run in parallel. If not specified, the application will use the maximum available threads.
 
 Example:
 
