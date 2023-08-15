@@ -136,7 +136,7 @@ def strawpoll_vote():
 
             res = requests.post(url,
                                 proxies={
-                                    "http": proxy, "https": proxy
+                                    "http://": proxy, "https://": proxy
                                 },
                                 headers=headers,
                                 json=post_body)
