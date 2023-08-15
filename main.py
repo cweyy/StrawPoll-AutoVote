@@ -15,9 +15,12 @@ author = "cweyy"
 
 parser = argparse.ArgumentParser(description="Poll voter")
 parser.add_argument("--threads", type=int, help="Thread count")
-parser.add_argument("--poll", type=str, help="Poll Value", required=True)  # Make --poll required
-parser.add_argument("--vote", type=str, help="Vote Value", required=True)  # Make --vote required
-parser.add_argument("--proxies", type=str, help="Proxies File", required=True)  # Make --proxies required
+parser.add_argument("--poll", type=str, help="Poll Value",
+                    required=True)  # Make --poll required
+parser.add_argument("--vote", type=str, help="Vote Value",
+                    required=True)  # Make --vote required
+parser.add_argument("--proxies", type=str, help="Proxies File",
+                    required=True)  # Make --proxies required
 
 args = parser.parse_args()
 
@@ -58,12 +61,7 @@ watermark = colored("""
 """, "blue")
 
 
-
-
 print(watermark)
-
-
-
 
 
 def get_session(proxy):
@@ -74,9 +72,7 @@ def get_session(proxy):
                        }
                        )
 
-
     return str(res.cookies.get("session"))
-
 
 
 def strawpoll_vote():
@@ -139,22 +135,23 @@ def strawpoll_vote():
             }
 
             res = requests.post(url,
-            proxies={
-                "http": proxy, "https": proxy
-            },
-            headers=headers,
-            json=post_body)
+                                proxies={
+                                    "http": proxy, "https": proxy
+                                },
+                                headers=headers,
+                                json=post_body)
 
-        except Exception as e:
-            print(e)
+        except:
             continue
 
         latency = int(round(time.time() * 1000)) - starttime
 
         if("error" not in res.json()):
-            print(colored(proxy, "green") + "   " + colored("(" + str(latency) + "ms)", "yellow"))
+            print(colored(proxy, "green") + "   " +
+                  colored("(" + str(latency) + "ms)", "yellow"))
         else:
-            print(colored(proxy, "red") + "   " + colored("(" + str(latency) + "ms)", "yellow"))
+            print(colored(proxy, "red") + "   " +
+                  colored("(" + str(latency) + "ms)", "yellow"))
 
 
 def add_proxy_to_file(proxy):
