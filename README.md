@@ -5,9 +5,15 @@ StrawPoll-AutoVote is a Python command line application designed to automate vot
 
 ## Prerequisites :clipboard:
 
+| Python Version | working        |
+|----------------|----------------|
+| 3.9            | no             |
+| 3.10           | not tested yet |
+| 3.11           | yes            |
+
 Before using this application, make sure you have the following:
 
-1. :snake: Python 3.x installed on your system.
+1. :snake: Python 3.11 installed on your system.
 2. :page_facing_up: A list of proxy servers in a text file, e.g., `http_proxies.txt`, with each proxy formatted as `IP:Port` on a new line.
 
 Example:
