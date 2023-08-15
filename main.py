@@ -16,11 +16,11 @@ author = "cweyy"
 parser = argparse.ArgumentParser(description="Poll voter")
 parser.add_argument("--threads", type=int, help="Thread count")
 parser.add_argument("--poll", type=str, help="Poll Value",
-                    required=True)  # Make --poll required
+                    required=True)
 parser.add_argument("--vote", type=str, help="Vote Value",
-                    required=True)  # Make --vote required
+                    required=True)
 parser.add_argument("--proxies", type=str, help="Proxies File",
-                    required=True)  # Make --proxies required
+                    required=True)
 
 args = parser.parse_args()
 
@@ -141,7 +141,8 @@ def strawpoll_vote():
                                 headers=headers,
                                 json=post_body)
 
-        except:
+        except Exception as e:
+            print(e)
             continue
 
         latency = int(round(time.time() * 1000)) - starttime
