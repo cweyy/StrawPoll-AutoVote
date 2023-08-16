@@ -84,7 +84,7 @@ if poll_id is None:
 
 
 if vote_id is None:
-    url = "https://strawpoll.com/2ayLkrRKAZ4"
+    url = "https://strawpoll.com/" + poll_id
 
     response = requests.get(url)
     html_content = response.content
