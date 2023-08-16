@@ -8,7 +8,7 @@ StrawPoll-AutoVote is a Python command line application designed to automate vot
 | Python Version | working        |
 |----------------|----------------|
 | 3.9            | no             |
-| 3.10           | not tested yet |
+| 3.10           | yes            |
 | 3.11           | yes            |
 
 Before using this application, make sure you have the following:
