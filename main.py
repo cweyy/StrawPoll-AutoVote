@@ -1,6 +1,7 @@
 import threading
 import queue
 import sys
+from bs4 import BeautifulSoup
 
 import requests
 import time
@@ -16,12 +17,9 @@ author = "cweyy"
 
 parser = argparse.ArgumentParser(description="Poll voter")
 parser.add_argument("--threads", type=int, help="Thread count")
-parser.add_argument("--poll", type=str, help="Poll Value",
-                    required=True)
-parser.add_argument("--vote", type=str, help="Vote Value",
-                    required=True)
-parser.add_argument("--proxies", type=str, help="Proxies File",
-                    required=True)
+parser.add_argument("--poll", type=str, help="Poll Value")
+parser.add_argument("--vote", type=str, help="Vote Value")
+parser.add_argument("--proxies", type=str, help="Proxies File")
 
 args = parser.parse_args()
 
@@ -32,6 +30,13 @@ valid_proxies = []
 proxies = []
 
 proxies_file = args.proxies
+
+
+if proxies_file is None:
+    proxies_file = input(colored("Proxiesfile: ", "yellow"))
+
+    print(" ")
+    print(" ")
 
 
 with open(proxies_file, "r") as f:
@@ -57,19 +62,58 @@ watermark = colored("""
   / _ \ || |  _/ _ \ V / _ \  _/ -_)  
  /_/ \_\_,_|\__\___/\_/\___/\__\___| """ + colored("v" + version, "red") + " " + colored("-", "blue") + " " + colored(str(len(proxies)) + " proxies", "yellow") + """
 
-
-
 """, "blue")
 
 
 print(watermark)
 
 
-required_version = (3, 11)
+required_version = (3, 10)
 
 if sys.version_info < required_version:
-    print(colored("Python 3.11 or higher required!", "red"))
+    print(colored("Python 3.10 or higher required!", "red"))
     exit()
+
+
+
+if poll_id is None:
+    poll_id = input(colored("Poll id: ", "yellow"))
+
+    print(" ")
+    print(" ")
+
+
+if vote_id is None:
+    url = "https://strawpoll.com/2ayLkrRKAZ4"
+
+    response = requests.get(url)
+    html_content = response.content
+
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+
+    count = 1
+    vote_data = []
+    option_elements = soup.find_all(class_="strawpoll-option")
+
+    for option in option_elements:
+        print(colored("[" + str(count) + "] ", "blue") + option.text.strip())
+        count = count + 1
+        vote_data.append(option.input.get("value"))
+    print(" ")
+    choose = input(colored("Choose an option: ", "yellow"))
+    if choose.isnumeric():
+        vote_id = vote_data[int(choose) - 1]
+    else:
+        exit()
+
+
+
+
+
+print(" ")
+print(" ")
+print(" ")
 
 
 def get_session(proxy):
@@ -148,17 +192,22 @@ def strawpoll_vote():
                                 },
                                 headers=headers,
                                 json=post_body)
+            
+            try:
+                latency = int(round(time.time() * 1000)) - starttime
+
+                if("error" not in res.json()):
+                    print(colored(proxy, "green") + "   " +
+                        colored("(" + str(latency) + "ms)", "yellow"))
+                else:
+                    print(colored(proxy, "red") + "   " +
+                        colored("(" + str(latency) + "ms)", "yellow"))
+            except:
+                continue
         except:
             continue
 
-        latency = int(round(time.time() * 1000)) - starttime
 
-        if("error" not in res.json()):
-            print(colored(proxy, "green") + "   " +
-                  colored("(" + str(latency) + "ms)", "yellow"))
-        else:
-            print(colored(proxy, "red") + "   " +
-                  colored("(" + str(latency) + "ms)", "yellow"))
 
 
 def add_proxy_to_file(proxy):
